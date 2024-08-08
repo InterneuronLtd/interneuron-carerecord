@@ -1,0 +1,82 @@
+ //Interneuron synapse
+
+//Copyright(C) 2024 Interneuron Limited
+
+//This program is free software: you can redistribute it and/or modify
+//it under the terms of the GNU General Public License as published by
+//the Free Software Foundation, either version 3 of the License, or
+//(at your option) any later version.
+
+//This program is distributed in the hope that it will be useful,
+//but WITHOUT ANY WARRANTY; without even the implied warranty of
+//MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+//See the
+//GNU General Public License for more details.
+
+//You should have received a copy of the GNU General Public License
+//along with this program.If not, see<http://www.gnu.org/licenses/>.
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+
+namespace Interneuron.CareRecord.Model.DomainModels
+{
+    public partial class entitystorematerialised_CorePerson : Interneuron.CareRecord.Infrastructure.Domain.EntityBase, IEquatable<entitystorematerialised_CorePerson>
+    {
+        public string PersonId { get; set; }
+        public string RowId { get; set; }
+        public int? Sequenceid { get; set; }
+        public string Contextkey { get; set; }
+        public DateTime? Createdtimestamp { get; set; }
+        public DateTime? Createddate { get; set; }
+        public string Createdsource { get; set; }
+        public string Createdmessageid { get; set; }
+        public string Createdby { get; set; }
+        public short? Recordstatus { get; set; }
+        public string Timezonename { get; set; }
+        public int? Timezoneoffset { get; set; }
+        public string Tenant { get; set; }
+        public string Firstname { get; set; }
+        public string Middlename { get; set; }
+        public string Familyname { get; set; }
+        public string Fullname { get; set; }
+        public string Preferredname { get; set; }
+        public string Titlecode { get; set; }
+        public string Titletext { get; set; }
+        public DateTime? Dateofbirth { get; set; }
+        public DateTime? Dateofbirthts { get; set; }
+        public DateTime? Dateofdeath { get; set; }
+        public DateTime? Dateofdeathts { get; set; }
+        public string Gendercode { get; set; }
+        public string Gendertext { get; set; }
+        public string Ethnicitycode { get; set; }
+        public string Ethnicitytext { get; set; }
+        public string Maritalstatuscode { get; set; }
+        public string Maritalstatustext { get; set; }
+        public string Religioncode { get; set; }
+        public string Religiontext { get; set; }
+        public bool? Deathindicator { get; set; }
+        public string Primarylanguagecode { get; set; }
+        public string Primarylanguagetext { get; set; }
+        public string Interpreterrequired { get; set; }
+
+        public bool Equals([AllowNull] entitystorematerialised_CorePerson other)
+        {
+            //Check whether the compared object is null.
+            if (Object.ReferenceEquals(other, null)) return false;
+
+            //Check whether the compared object references the same data.
+            if (Object.ReferenceEquals(this, other)) return true;
+
+            //Check whether the products' properties are equal.
+            return PersonId.Equals(other.PersonId);
+        }
+
+        public override int GetHashCode()
+        {
+            //Calculate the hash code for the product.
+            return PersonId.GetHashCode();
+        }
+    }
+}

@@ -1,0 +1,33 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="5.0.1" />
+    <PackageReference Include="AutoMapper" Version="9.0.0" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
+    <PackageReference Include="Hl7.Fhir.STU3" Version="4.0.0" />
+    <PackageReference Include="Interneuron.Common" Version="3.0.0" />
+    <PackageReference Include="Interneuron.CustomExceptions" Version="3.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Model\Interneuron.CareRecord.Model.csproj">
+      <Private>true</Private>
+    </ProjectReference>
+    <ProjectReference Include="..\Repository\Interneuron.CareRecord.Repository.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Interneuron.CustomExceptions">
+      <HintPath>..\..\BuildingBlocks\Infrastructure\Exceptions\CustomExceptions\bin\Debug\netstandard2.0\Interneuron.CustomExceptions.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+  </ItemGroup>
+
+</Project>
