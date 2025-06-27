@@ -44,10 +44,11 @@ namespace Interneuron.CareRecord.API
             try
             {
                 Log.Information(ProgramInitMsg, AppName);
-                var host = BuildWebHost(configuration, args);
+                //var host = BuildWebHost(configuration, args);
+                CreateHostBuilder(args).Build().Run();
 
                 Log.Information(ProgramStartMsg, AppName);
-                host.Run();
+                //host.Run();
 
                 return 0;
             }
@@ -70,19 +71,39 @@ namespace Interneuron.CareRecord.API
         //            webBuilder.UseStartup<Startup>();
         //        });
 
-        public static IHost BuildWebHost(IConfiguration configuration, string[] args) =>
-            Host.CreateDefaultBuilder(args)
-                .ConfigureAppConfiguration((c) => c.AddConfiguration(configuration))
-                .UseServiceProviderFactory(new AutofacServiceProviderFactory())
-                .ConfigureWebHostDefaults(webBuilder =>
-                {
-                    // webBuilder.UseKestrel(); //Not required in >= 3.0
-                    webBuilder.UseStartup<Startup>();
-                    webBuilder.UseIISIntegration();
-                    webBuilder.UseContentRoot(Directory.GetCurrentDirectory());
-                    webBuilder.UseSerilog();
-                }).Build();
+        //public static IHost BuildWebHost(IConfiguration configuration, string[] args) =>
+        //    Host.CreateDefaultBuilder(args)
+        //        .ConfigureAppConfiguration((c) => c.AddConfiguration(configuration))
+        //        .UseServiceProviderFactory(new AutofacServiceProviderFactory())
+        //        .ConfigureWebHostDefaults(webBuilder =>
+        //        {
+        //            // webBuilder.UseKestrel(); //Not required in >= 3.0
+        //            webBuilder.UseStartup<Startup>();
+        //            webBuilder.UseIISIntegration();
+        //            webBuilder.UseContentRoot(Directory.GetCurrentDirectory());
+        //            webBuilder.UseSerilog();
+        //        }).Build();
 
+        public static IHostBuilder CreateHostBuilder(string[] args) =>
+           Host.CreateDefaultBuilder(args)
+               .UseSerilog()
+               .ConfigureAppConfiguration((context, config) =>
+               {
+                   var environmentName = System.Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Production";
+
+                   config.SetBasePath(Directory.GetCurrentDirectory())
+                         .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                         .AddJsonFile($"appsettings.{environmentName}.json", optional: true, reloadOnChange: true)
+                         .AddEnvironmentVariables();
+               })
+               .UseServiceProviderFactory(new AutofacServiceProviderFactory())
+               .ConfigureWebHostDefaults(webBuilder =>
+               {
+                   webBuilder.UseStartup<Startup>()
+                             //.UseKestrel()
+                             .UseIISIntegration()
+                             .UseContentRoot(Directory.GetCurrentDirectory());
+               });
         private static IConfiguration GetConfiguration()
         {
             var environmentName = System.Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") ?? "Production";
